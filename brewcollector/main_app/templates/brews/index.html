@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Cat List</h1>
+
+{% for brew in brews %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ brew.name }}</span>
+      
+      
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}
