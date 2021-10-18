@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Brew List</h1>
+<h1>Brew Details</h1>
 
-{% for brew in brews %}
   <div class="card">
-    <a href="{% url 'detail' brew.id %}">
-      <div class="card-content">
+    <div class="card-content">
       <span class="card-title">{{ brew.name }}</span>
       Brewery: {{ brew.brewery }}
       <br>
@@ -18,8 +16,6 @@
       <br>
       Price: {{brew.price}}
     </div>
-    </a>
   </div>
-{% endfor %}
 
 {% endblock %}

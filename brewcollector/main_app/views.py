@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Brew
 
 # Create your views here.
 
@@ -11,21 +12,11 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
-class Brew:
-    def __init__(self, name, beerType, brewery, ibu, alcoholPercent, price):
-        self.name = name
-        self.beerType = beerType
-        self.brewery = brewery
-        self.ibu = ibu
-        self.alcoholPercent = alcoholPercent
-        self.price = price
-
-
-brews = [
-    Brew('Vancouver Pale Ale','Pale Ale', 'Vancouver Brewing', '20', '5%','2$'),
-    Brew('Vancouver IPA','IPA', 'Vancouver Brewing', '80', '8%','4$'),
-    Brew('Vancouver Pilsner','Pilsner', 'Vancouver Brewing', '40', '4%','3$')
-]
 
 def brews_index(request):
+    brews = Brew.objects.all()
     return render(request, 'brews/index.html', {'brews': brews})
+
+def brews_detail(request, brew_id):
+    brew = Brew.objects.get(id=brew_id)
+    return render(request, 'brews/detail.html', {'brew': brew})
