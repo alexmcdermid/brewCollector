@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" action="/brews/{{ brew.id }}/submit_update_form/">
+    {% csrf_token %}
+
+    Name: <input name="name" value='{{brew.name}}'>
+    Beer Type: <input name="beerType" value='{{brew.beerType}}'>
+    Brewery: <input name="brewery" value='{{brew.brewery}}'>
+    IBU: <input name="ibu" value='{{brew.ibu}}'>
+    Alcohol Percent: <input name="alcoholPercent" value='{{brew.alcoholPercent}}'>
+    Price: <input name="price" value='{{brew.price}}'>
+    
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

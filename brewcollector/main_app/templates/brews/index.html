@@ -17,9 +17,19 @@
       Alcohol percent: {{brew.alcoholPercent}}
       <br>
       Price: {{brew.price}}
+      <br>
+      <br>
+      <a href="/brews/{{ brew.id }}/edit/">Edit</a> 
+      <a href="/brews/{{ brew.id }}/delete/">Delete</a>
     </div>
     </a>
   </div>
 {% endfor %}
-
+<a href="/brews/new">
+  <div class='card'>
+    <div class='card-content'>
+      Create new Brew
+    </div>
+  </div>
+</a>
 {% endblock %}
