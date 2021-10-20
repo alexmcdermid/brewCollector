@@ -10,6 +10,15 @@ LOCATIONS = (
     ('W', 'West Vancouver BCL')
 )
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('ingredients_detail', kwargs={'pk': self.id})    
+
 # Create your models here.
 class Brew(models.Model):
     name = models.CharField(max_length=100)
@@ -19,8 +28,13 @@ class Brew(models.Model):
     alcoholPercent = IntegerField()
     price = IntegerField()
 
+    ingredients = models.ManyToManyField(Ingredient)
+
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'brew_id': self.id})
     
     def stocked(self):
         return self.location_set.stock >= 20

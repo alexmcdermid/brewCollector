@@ -45,6 +45,51 @@
       <input type="submit" class="btn" value="Add Stock">
     </form>
   </div>
+  <div class="row">
+    <div class="col s6">
+      <h3>{{ brew.name }}'s Ingredients</h3>
+      {% if brew.ingredients.count %}
+        {% for ingredient in brew.ingredients.all %}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+                {{ ingredient.name }}
+              </span>
+            </div>
+            <div class='card-action'>
+              <form action="{% url 'unassoc_ing' brew.id ingredient.id %}" method="post">
+                {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h5>No Ingredients :(</h5>
+      {% endif %}
+    </div>
+    <div class="col s6">
+      <h3>Available Ingredients</h3>
+      {% if ingredients.count %}
+        {% for ingredient in ingredients.all %}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+              {{ ingredient.name }}
+              </span>
+            </div>
+            <div class="card-action">
+              <form action="{% url 'assoc_ing' brew.id ingredient.id %}" method="post">
+                  {% csrf_token %}
+                <button type="submit" class="btn">Add</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h5>{{brew.name}} Already Has All Ingredients Available</h5>
+      {% endif %}
+    </div>  
   <script>
   var dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {

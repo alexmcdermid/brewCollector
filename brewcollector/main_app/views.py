@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Brew,Locations
+from .models import Brew, Ingredient,Locations
 from .forms import LocationsForm
 
 
@@ -64,8 +64,10 @@ def brews_detail(request, brew_id):
     count = 0
     for location in locations:
         count+=location.stock
+    
+    ingredients_brew_doesnt_have = Ingredient.objects.exclude(id__in = brew.ingredients.all().values_list('id'))
     return render(request, 'brews/detail.html', {
-        'brew': brew, 'location_form': location_form, 'count': count
+        'brew': brew, 'location_form': location_form, 'count': count, 'ingredients':ingredients_brew_doesnt_have
     })
 
 def add_location(request, brew_id):
@@ -75,3 +77,14 @@ def add_location(request, brew_id):
         new_location.brew_id = brew_id
         new_location.save()
     return redirect('detail', brew_id=brew_id)
+
+
+def assoc_ing(request, brew_id, ingredient_id):
+  # Note that you can pass a toy's id instead of the whole object
+  Brew.objects.get(id=brew_id).ingredients.add(ingredient_id)
+  return redirect('detail', brew_id=brew_id)
+
+def unassoc_ing(request, brew_id, ingredient_id):
+  # Note that you can pass a toy's id instead of the whole object
+  Brew.objects.get(id=brew_id).ingredients.remove(ingredient_id)
+  return redirect('detail', brew_id=brew_id)
