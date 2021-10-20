@@ -17,5 +17,43 @@
       Price: {{brew.price}}
     </div>
   </div>
+  <div class="col s6">
+    <table class="striped">
+      <thead>
+        <tr><th>Stock</th><th>Best before date</th><th>Location</th></tr>
+      </thead>
+      <tbody>
+        {% for locations in brew.locations_set.all %}
+          <tr>
+            <td>{{locations.stock}}</td>
+            <td>{{locations.date}}</td>
+            <td>{{locations.get_location_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
+    {% if count %}
+      <div class="card-panel teal-text center-align">stocked</div> 
+    {% else %}
+      <div class="card-panel teal-text center-align">not stocked</div> 
+    {% endif %}
+    
+    <form action="{% url 'add_location' brew.id %}" method='post'>
+      {% csrf_token %}
+      {{ location_form.as_p }}
+      <input type="submit" class="btn" value="Add Stock">
+    </form>
+  </div>
+  <script>
+  var dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+  var selectEl = document.getElementById('id_location');
+  M.FormSelect.init(selectEl);
+  </script>
 {% endblock %}

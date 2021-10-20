@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
-from .models import Brew
+from .models import Brew,Locations
+from .forms import LocationsForm
+
 
 # Create your views here.
 
@@ -54,3 +56,22 @@ def brews_update(request, brew_id):
     brew.price = request.POST['price']
     brew.save()
     return redirect(f'/brews/{brew.id}')
+
+def brews_detail(request, brew_id):
+    brew = Brew.objects.get(id=brew_id)
+    location_form = LocationsForm()
+    locations = Locations.objects.all()
+    count = 0
+    for location in locations:
+        count+=location.stock
+    return render(request, 'brews/detail.html', {
+        'brew': brew, 'location_form': location_form, 'count': count
+    })
+
+def add_location(request, brew_id):
+    form = LocationsForm(request.POST)
+    if form.is_valid():
+        new_location = form.save(commit=False)
+        new_location.brew_id = brew_id
+        new_location.save()
+    return redirect('detail', brew_id=brew_id)

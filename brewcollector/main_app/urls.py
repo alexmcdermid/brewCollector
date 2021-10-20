@@ -10,5 +10,6 @@ urlpatterns = [
     path('brews_submit/', views.brews_create),
     path('brews/<int:brew_id>/delete/', views.brews_delete),
     path('brews/<int:brew_id>/edit/', views.brews_edit), 
-    path('brews/<int:brew_id>/submit_update_form/', views.brews_update) 
+    path('brews/<int:brew_id>/submit_update_form/', views.brews_update),
+    path('brews/<int:brew_id>/add_location/', views.add_location, name='add_location')
 ]
