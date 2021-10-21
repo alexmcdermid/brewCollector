@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="POST" action="/brews_submit/">
+    {% csrf_token %}
+    Name: <input name="name">
+    Beer Type: <input name="beerType">
+    Brewery: <input name="brewery">
+    IBU: <input name="ibu">
+    Alcohol Percent: <input name="alcoholPercent">
+    Price: <input name="price">
+    <button type="submit">Add</button>
+</form>
+
+{% endblock %}

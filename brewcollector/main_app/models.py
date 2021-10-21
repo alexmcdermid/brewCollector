@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields import IntegerField
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 LOCATIONS = (
     ('N', 'North Vancouver BCL'),
@@ -27,6 +28,7 @@ class Brew(models.Model):
     ibu = IntegerField()
     alcoholPercent = IntegerField()
     price = IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     ingredients = models.ManyToManyField(Ingredient)
 
