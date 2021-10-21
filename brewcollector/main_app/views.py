@@ -34,6 +34,7 @@ def brews_new(request):
     return render(request,'brews/new.html', {})
 
 #old brews create
+@login_required
 def brews_create(request):
     brew = Brew.objects.create(
         name = request.POST['name'],
@@ -42,6 +43,7 @@ def brews_create(request):
         ibu = request.POST['ibu'],
         alcoholPercent = request.POST['alcoholPercent'],
         price = request.POST['price']
+        #user = request.user this is how we would do it with not createview
     )
 
     return redirect(f'/brews/{brew.id}')
